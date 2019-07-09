@@ -38,8 +38,7 @@ I have attempted to illustrate the points at which
 
 <figure>
     <img src="images/MeshLayers.png"
-        alt="MeshLayers" 
-        align="left" width="800">
+        alt="MeshLayers">
     <figcaption>Mesh Layers</figcaption>
 </figure>
 
