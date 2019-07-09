@@ -31,34 +31,47 @@ Before you start :
 * Choose a naming scheme for your Mesh nodes (each Pi is a Node). I use 'mesh-xxx'.
 
 # Initialising the Base System
+~~~
 Create SD card from image - I use Raspbian Stretch Lite (Buster for the Bridge).
 Copy 'ssh' to /boot.
 For 'Master', modify/copy 'wpa_supplicant.conf.local' to /boot/wpa_supplicant.conf.
 All others (including Bridge), modify/copy 'wpa_supplicant.conf.mesh' to /boot/wpa_supplicant.conf.
+~~~
 
-Boot from the SDCard. 
+~~~
+Boot from the SDCard.
 The IP address will be provided by the Router configured above.
 Find the IP address (via the Router - it'll be called 'raspberrypi').
 When initialising the Master, the Router will be the local network.
 For the Bridge and any Clients, the IP address will be provided by the Master (which
 must be configured and running as an AP).
+~~~
 
 Login via (e.g.) ssh : 
+~~~
 ssh pi@xxx.xxx.xxx.xxx
 (password is raspberry)
+~~~
 
 Then ..
+~~~
 pi@raspberrypi:~ $ sudo bash
+~~~
 
 Initial config
+~~~
 root@mesh-master:/home/pi# raspi-config
+~~~
 
+~~~
 Change password and hostname (don't bother to reboot yet)
 Enable i2c/camera etc as required
-
+~~~
 Update the system (you should always be up to date)
+~~~
 root@mesh-master:/home/pi# apt-get update
 root@mesh-master:/home/pi# apt-get -y upgrade
+~~~
 
 Reboot
 
