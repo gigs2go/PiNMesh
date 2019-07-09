@@ -36,6 +36,13 @@ to plug it in.
 
 I have attempted to illustrate the points at which 
 
+<figure>
+    <img src="images/MeshLayers.png"
+        alt="MeshLayers" 
+        align="left" width="800">
+    <figcaption>Mesh Layers</figcaption>
+</figure>
+
 #### Requirements
 It can be implemented on a single Zero (which is how I started), but is better in the environment 
 I describe (1xA+ and a couple/more zeroes, with a B+ as a Gateway).
