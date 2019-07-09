@@ -3,21 +3,16 @@ The purpose of this chapter is to create a standalone network that is independen
 This is the **Mesh**.
 
 The various components of the Mesh are :
-* Master - only 1 per Mesh
-  This is the machine which supplies the required infrastructure to support the Mesh 
-  : DHCP, DNS, etc. For this Chapter, we won't touch on the 'etc.'.
-  I refer to this Node as 'mesh-master', which is it's hostname.
-  This Chapter provides instructions to set up a Pi as the Master.
-  I used an A+ for this as the extra processing power and multi-core operation is more 
-  suited to the type of operations we will be doing.
-* Client - 1 -> n per Mesh
-  This is any machine which is configured to connect to the Master. This chapter provides 
-  instructions for setting up any Pi as a Client. The Master can be the client too.
-* Bridge - external network connectivity
-  This is a machine with 2 network adapters. 1 connects to the external network (usually 
-  via a Router) and the other to the Mesh. This chapter provides instructions for setting 
-  up a Pi B+ as a Bridge.
-  I refer to this Node as 'mesh-bridge', which is it's hostname.
+* Master - only 1 per Mesh.
+This is the machine which supplies the required infrastructure to support the Mesh : DHCP, DNS, etc. For this Chapter, we won't touch on the 'etc.'.
+I refer to this Node as 'mesh-master', which is it's hostname.
+This Chapter provides instructions to set up a Pi as the Master.
+I used an A+ for this as the extra processing power and multi-core operation is more suited to the type of operations we will be doing.
+* Client - 1 -> n per Mesh.
+This is any machine which is configured to connect to the Master. This chapter provides instructions for setting up any Pi as a Client. The Master can be the client too.
+* Bridge - external network connectivity.
+This is a machine with 2 network adapters. 1 connects to the external network (usually via a Router) and the other to the Mesh. This chapter provides instructions for setting up a Pi B+ as a Bridge.
+I refer to this Node as 'mesh-bridge', which is it's hostname.
     
 When it is connected to the external network (or, more properly, when it is connected to via a/the Bridge), machines 
 inside the mesh will be able to access the network, which makes installation and configuration 
