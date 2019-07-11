@@ -4,20 +4,22 @@ This is the **Mesh**.
 
 The various components of the Mesh are :
 * Master - only 1 per Mesh.
-This is the machine which supplies the required infrastructure to support the Mesh : DHCP, DNS, etc. For this Chapter, we won't touch on the 'etc.'.
+This is the machine which supplies the required infrastructure to support the Mesh : DHCP, DNS, etc. For this Chapter, we 
+won't touch on the 'etc.'.
 I refer to this Node as 'mesh-master', which is it's hostname.
 This Chapter provides instructions to set up a Pi as the Master.
-I used an A+ for this as the extra processing power and multi-core operation is more suited to the type of operations we will be doing.
+I used an A+ for this as the extra processing power and multi-core operation is more suited to the type of operations we 
+will be doing.
 * Client - 1 -> n per Mesh.
-This is any machine which is configured to connect to the Master. This chapter provides instructions for setting up any Pi as a Client. The Master can be the client too.
+This is any machine which is configured to connect to the Master. The Master can be the client too. 
+This chapter provides instructions for setting up any Pi as a Client.
 * Bridge - external network connectivity.
-This is a machine with 2 network adapters. 1 connects to the external network (usually via a Router) and the other to the Mesh. This chapter provides instructions for setting up a Pi B+ as a Bridge.
+This is a machine with 2 network adapters. 1 connects to the external network (usually via a Router) and the other to the Mesh. 
+This chapter provides instructions for setting up a Pi B+ as a Bridge. It is wired directly to 
+the local Router, and uses the WiFi as a client into the Mesh's DHCP server. Once 
+connected to both networks, the Mesh nodes use it to connect to external networks.
 I refer to this Node as 'mesh-bridge', which is it's hostname.
     
-When it is connected to the external network (or, more properly, when it is connected to via a/the Bridge), machines 
-inside the mesh will be able to access the network, which makes installation and configuration 
-much easier.
-
 Note that all this is just 1 possible configuration, which I am using. Other flavours 
 are entirely acceptable.
 My first configuration was a single Pi Zero as Master and Client, and a PC as the Bridge.
@@ -75,17 +77,27 @@ root@mesh-master:/home/pi# apt-get -y upgrade
 
 Reboot
 
-Your pi will now be accessible from your Router (if you set it up as Master) or 
+Your pi will now be accessible via your Router (if you set it up as Master) or 
 from the Bridge or Master if it was a client.
 If your development machine has a spare WiFi connector, and the Master is configured 
 and running as an AP, you can connect directly to the 'MeshAccess' network and access 
 the machines from there. 
 
-# Converting the Master to an AP
-After this, the Pi will no longer be connected to the Router and you will only be able 
+# Converting the Master to an Access Point (AP)
+## What? Why?
+The aim is to have the Master as a physically stand-alone Node, which any other nodes 
+connect directly to.
+This allows operation either on a single Node (which can then be connected to and controlled 
+from any web client), or with multiple nodes anywhere within wifi range.
+Sorting out power supply for this sort of operation is fun if you want to make the Master 
+mobile. In-house, I'm using a wired B as the Master and multiple zeroes as Clients (I'm 
+sure I've lost one ...)
+
+## How?
+After this, the **Pi will no longer be connected to the Router** and you will only be able 
 to access it directly or via the Bridge.
 
-Do **ALL** of these steps in one login session!
+Do **ALL** of these steps in one login session (or have kb and screen ready)!
 ~~~
 pi@mesh-master:~ $ sudo bash
 ~~~

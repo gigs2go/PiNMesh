@@ -1,5 +1,6 @@
 # Pi 'n' Mesh
-## Simple Introduction to Extremely Complicated(tm) Things
+## **WORK IN PROGRESS - please ignore**
+## A Simple Introduction to some Extremely Complicated(tm) Things
 ### Introduction
 This project uses Raspberry Pi as the hardware platform, and Raspbian as the OS.
 It provides a complete (example) framework of some complex technologies, with an explanation 
@@ -8,16 +9,52 @@ of what they are and why they're useful.
 Everything is downloaded using apt-get, and there is no building involved. It really is quite
 simple.
 
-I've called it a 'mesh' because I liked being able to call the project 'PiNMesh' (pi 'n' mesh)/geddit?
-It's not really a mesh, but I'll call it that in this context.
+I've called it a 'Mesh' because I liked being able to call the project Pi 'n' Mesh
+It's not really a mesh, but I'll call it that in this context. It's like a mesh ...
 
-The aim is to have a standalone system (I started with a 4WD 'rover') which allows external clients 
-to access a web interface to control the system itself. I can drive my rover and see through it's 
-camera.
+The initial aim was to have a standalone 4WD 'rover' platform, which allowed an external 
+client to access a web interface and control it. Additionally, a camera 
+was used to provide visuals. I implemented this in Java using Pi4J to control the I2C 
+interface on the Pi. The web front end is Javascript based for REST-like control commands 
+and the streaming camera image is by UV4L. This is my PiRover project.
 
-The mesh itself allows more Pi's to be added but, more importantly, it allows 'services' to be 
+The next goal is to get the camera to control the platform, and follow an identified 
+object. I would love to get my Rover to follow a ball!
+Each of the bits I need is well defined and self-contained, but I need a way 
+to tie things together.
+Example : The camera stream needs to be processed for image-recognition, which needs 
+to tell the platform to go left or right. If Rover is going to chase the ball, we also 
+need to tell the platform to move forwards - but to prevent getting too close (or 
+to keep a given distance away) we need a distance sensor.
+
+However.
+
+The single Zero was capable of handling the platform control and the streaming, but I 
+didn't think it would be able to handle the image processing required as well, so I 
+thought about distributing it.
+I also thought about adding sensors and outputs and things, and I saw a pattern 
+emerging that I couldn't ignore.
+Integrating the various hardware and software components into a single application would 
+have resulted in a very complex piece of software!
+
+This project became an approach towards the 'Internet of Things', with a bit of Enterprise 
+Application Integration added. It uses mainstream software and very simple (and widely 
+written about) patterns, but it allows you to create arbitrarily complex interactions 
+between disparate things.
+ 
+
+
+
+
+The Mesh itself allows more Pi's to be added but, more importantly, it allows 'services' to be 
 developed, in any language you like, that can be treated entirely independently but are easy to
 install and integrate - think IoT.
+
+<figure>
+    <img src="images/MeshLayers.png"
+        alt="MeshLayers">
+    <figcaption>Mesh Layers</figcaption>
+</figure>
 
 The underlying mechanism uses MQTT (mosquitto here), which is increasingly being used in small device setups.
 The Message Queueing concept is widely used in enterprise software, and increasingly in small-things. 
@@ -36,11 +73,6 @@ to plug it in.
 
 I have attempted to illustrate the points at which 
 
-<figure>
-    <img src="images/MeshLayers.png"
-        alt="MeshLayers">
-    <figcaption>Mesh Layers</figcaption>
-</figure>
 
 #### Requirements
 It can be implemented on a single Zero (which is how I started), but is better in the environment 
