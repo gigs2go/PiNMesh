@@ -3,12 +3,11 @@ package com.gigs2go.framework.testpaho;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.gigs2go.framework.CommandHandler;
-import com.gigs2go.framework.CommandPayload;
-import com.gigs2go.framework.Payload;
-import com.gigs2go.framework.PublishResult;
-import com.gigs2go.framework.paho.PahoListener;
-import com.gigs2go.framework.paho.PahoPublisher;
+import com.gigs2go.pinmesh.framework.CommandHandler;
+import com.gigs2go.pinmesh.framework.Payload;
+import com.gigs2go.pinmesh.framework.PublishResult;
+import com.gigs2go.pinmesh.mqtt.PahoListener;
+import com.gigs2go.pinmesh.mqtt.PahoPublisher;
 
 public class TestPaho
 {
@@ -31,11 +30,11 @@ public class TestPaho
             };
 
             PahoListener listener = new PahoListener( broker, "PahoListener", topic, controller );
-            PahoPublisher publisher = new PahoPublisher( broker, "PahoPublisher" );
+            PahoPublisher publisher = new PahoPublisher( broker, "PahoPublisher", "/mesh/admin" );
             Payload payload;
             for ( int i = 0; i < 5; i++ )
             {
-                payload = new CommandPayload( topic, "steer value=" + Integer.toString( i * 200 ) );
+                payload = new Payload( topic, ("steer value=" + Integer.toString( i * 200 )).getBytes() );
                 publisher.publish( payload );
             }
         }

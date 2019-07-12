@@ -9,9 +9,9 @@
 		<version>1.0.0-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
-	<artifactId>pinmesh-framework</artifactId>
+	<artifactId>pinmesh-mqtt</artifactId>
 	<packaging>jar</packaging>
-	<name>Pi 'n' Mesh Framework Project</name>
+	<name>Pi 'n' Mesh MQTT</name>
 	<description>Provides the basic implementation for communicating with MQTT</description>
 
 	<dependencies>
@@ -19,6 +19,10 @@
 		<dependency>
 			<groupId>org.eclipse.paho</groupId>
 			<artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.gigs2go.pinmesh</groupId>
+			<artifactId>pinmesh-framework</artifactId>
 		</dependency>
 	</dependencies>
 </project>

@@ -2,8 +2,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.gigs2go.wot</groupId>
-	<artifactId>wot-parent</artifactId>
+	<groupId>com.gigs2go.pinmesh</groupId>
+	<artifactId>pinmesh-parent</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Multi-Module Project Holder</name>
@@ -11,6 +11,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<pinmesh.version>1.0.0-SNAPSHOT</pinmesh.version>
 		<paho.version>1.2.1</paho.version>
 		<slf4j.version>1.7.26</slf4j.version>
 		<pi4j.version>1.2</pi4j.version>
@@ -22,6 +23,7 @@
 	<modules>
 		<module>framework</module>
 		<module>http</module>
+		<module>mqtt</module>
 	</modules>
 
 	<dependencyManagement>
@@ -54,20 +56,22 @@
 				<version>${pi4j.version}</version>
 			</dependency>
 			<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-api</artifactId>
-				<version>${slf4j.version}</version>
-			</dependency>
+			<!-- dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-api</artifactId> 
+				<version>${slf4j.version}</version> </dependency -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-simple</artifactId>
 				<version>${slf4j.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.gigs2go.wot</groupId>
-				<artifactId>wot-framework</artifactId>
-				<version>1.0.0-SNAPSHOT</version>
+				<groupId>com.gigs2go.pinmesh</groupId>
+				<artifactId>pinmesh-framework</artifactId>
+				<version>${pinmesh.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.gigs2go.pinmesh</groupId>
+				<artifactId>pinmesh-mqtt</artifactId>
+				<version>${pinmesh.version}</version>
 			</dependency>
 			<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
 			<dependency>
@@ -78,25 +82,22 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	
+
 	<dependencies>
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-api</artifactId>
-				<version>${slf4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-simple</artifactId>
-				<version>${slf4j.version}</version>
-			</dependency>
-			<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
-			<dependency>
-				<groupId>org.junit.jupiter</groupId>
-				<artifactId>junit-jupiter-engine</artifactId>
-				<version>${junit.version}</version>
-				<scope>test</scope>
-			</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

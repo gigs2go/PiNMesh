@@ -1,4 +1,4 @@
-package com.gigs2go.framework.paho;
+package com.gigs2go.pinmesh.mqtt;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
@@ -10,10 +10,9 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.gigs2go.framework.CommandPayload;
-import com.gigs2go.framework.Payload;
-import com.gigs2go.framework.PublishResult;
-import com.gigs2go.framework.Publisher;
+import com.gigs2go.pinmesh.framework.Payload;
+import com.gigs2go.pinmesh.framework.PublishResult;
+import com.gigs2go.pinmesh.framework.Publisher;
 
 public class PahoPublisher implements Publisher
 {
@@ -22,21 +21,25 @@ public class PahoPublisher implements Publisher
     private MqttAsyncClient client = null;
     private String clientId;
     private String broker;
+    private String adminQueue;
 
-    public PahoPublisher(String broker, String clientId) throws MqttException
+    public PahoPublisher(String broker, String clientId, String adminQueue ) throws MqttException
     {
         this.broker = broker;
         this.clientId = clientId;
+        this.adminQueue = adminQueue;
         MemoryPersistence persistence = new MemoryPersistence();
         client = new MqttAsyncClient( broker, clientId, persistence );
         MqttConnectOptions connOpts = new MqttConnectOptions();
         connOpts.setCleanSession( true );
         // LastWillTestament (LWT)
-        connOpts.setWill( ADMIN_TOPIC, (clientId + " Terminated").getBytes(), 0, false );
+        connOpts.setWill( adminQueue, (clientId + " Terminated").getBytes(), 0, false );
         LOG.debug( "Connecting to broker: '{}'", broker );
         IMqttToken token = client.connect( connOpts );
         token.waitForCompletion();
         LOG.debug( "Connected" );
+        IMqttDeliveryToken deliveryToken = client.publish( adminQueue, (clientId + " Started").getBytes(), 0, false );
+        LOG.trace( "Message published to '{}' : '{}'", adminQueue, new String( deliveryToken.getMessage().getPayload() ) );
     }
 
     @Override

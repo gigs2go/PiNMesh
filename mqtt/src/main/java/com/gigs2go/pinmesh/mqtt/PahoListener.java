@@ -1,4 +1,4 @@
-package com.gigs2go.framework.paho;
+package com.gigs2go.pinmesh.mqtt;
 
 import java.util.concurrent.LinkedBlockingDeque;
 
@@ -12,10 +12,9 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.gigs2go.framework.CommandHandler;
-import com.gigs2go.framework.CommandPayload;
-import com.gigs2go.framework.Listener;
-import com.gigs2go.framework.Payload;
+import com.gigs2go.pinmesh.framework.CommandHandler;
+import com.gigs2go.pinmesh.framework.Listener;
+import com.gigs2go.pinmesh.framework.Payload;
 
 public class PahoListener implements MqttCallback, Listener
 {
@@ -73,7 +72,7 @@ public class PahoListener implements MqttCallback, Listener
     @Override
     public void messageArrived( String topic, MqttMessage message ) throws Exception
     {
-        Payload payload = new CommandPayload( topic, message.getPayload() );
+        Payload payload = new Payload( topic, message.getPayload() );
         LOG.debug( "Message arrived. Handling : '{}'", payload );
         inputQueue.add( payload );
     }

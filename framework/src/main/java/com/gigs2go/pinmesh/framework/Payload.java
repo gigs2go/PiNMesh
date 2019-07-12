@@ -1,4 +1,4 @@
-package com.gigs2go.framework;
+package com.gigs2go.pinmesh.framework;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

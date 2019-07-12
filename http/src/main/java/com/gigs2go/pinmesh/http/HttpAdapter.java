@@ -1,6 +1,8 @@
-package com.gigs2go.framework.http;
+package com.gigs2go.pinmesh.http;
 /**
- * Listen on a port and accept HTTP requests. Process request and extract/infer topic/cmd/params. Forward each request to mqtt topic.
+ * Listen on a port and accept HTTP requests. 
+ * Process request and extract/infer topic/cmd/params. 
+ * Forward each request to mqtt topic.
  */
 
 import java.io.IOException;
@@ -16,9 +18,8 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gigs2go.framework.Payload;
-import com.gigs2go.framework.paho.PahoPublisher;
-import com.gigs2go.framework.util.FrameworkUtils;
+import com.gigs2go.pinmesh.framework.Payload;
+import com.gigs2go.pinmesh.mqtt.PahoPublisher;
 
 import fi.iki.elonen.NanoHTTPD;
 import fi.iki.elonen.NanoHTTPD.Response.Status;
@@ -36,25 +37,20 @@ public class HttpAdapter extends NanoHTTPD {
 	private String root;
 
 	public static void main( String[] args ) throws NumberFormatException, MqttException, IOException {
-		Properties props = loadProperties( "/http.properties" );
+		Properties props = new Properties();
+		// Need to use Classloader from this jar file
+		InputStream is = jacksonMapper.getClass().getResourceAsStream( "/http.properties" );
+		LOG.trace( "Got '{}'", is.toString() );
+		props.load( is );
+		is.close();
+		LOG.trace( "Loaded : '{}'", props.toString() );
 		adapter = new HttpAdapter( props.getProperty( "broker.address" ), props.getProperty( "client.id" ),
 				props.getProperty( "topic.root" ), new Integer( props.getProperty( "http.listen.port" ) ) );
 	}
 
-	private static Properties loadProperties( String file ) throws IOException {
-		Properties props = new Properties();
-		LOG.trace( "Loading properties from '{}'", file );
-		//System.
-		InputStream is = jacksonMapper.getClass().getResourceAsStream( file );
-		LOG.trace( "Got '{}'", is.toString() );
-		props.load( is );
-		LOG.trace( "Loaded : '{}'", props.toString() );
-		return props;
-	}
-
 	public HttpAdapter( String broker, String clientId, String root, int port ) throws MqttException, IOException {
 		super( port );
-		publisher = new PahoPublisher( broker, clientId );
+		publisher = new PahoPublisher( broker, clientId, root + "/admin" );
 		LOG.debug( "Adapter initialised : {}, {}, {}, {}", broker, clientId, root, port );
 		this.broker = broker;
 		this.clientId = clientId;
@@ -97,22 +93,18 @@ public class HttpAdapter extends NanoHTTPD {
 		// Build topic String
 		int lastElementIndex = uriElements.length - 1;
 		for ( int i = 1; i < lastElementIndex; i++ ) {
-			topicBuilder.append( uriElements[ i ] );
-			if ( i < lastElementIndex -1 ) {
-				topicBuilder.append( "/" );
-			}
+			topicBuilder.append( "/" ).append( uriElements[ i ] );
 		}
 		String topic = topicBuilder.toString();
 		String command = uriElements[ lastElementIndex ];
 		Map<String, Object> message = new HashMap<>();
-		//message.put( "topic", topic );
 		message.put( "command", command );
 		message.put( "parameters", parameters );
 
 		try {
 			String jsonString = jacksonMapper.writeValueAsString( message );
 			LOG.trace( "Converted to '{}'", jsonString );
-			Payload payload = new Payload( topic, jsonString.trim().getBytes() );
+			Payload payload = new Payload( topic, jsonString.getBytes() );
 			publisher.publish( payload );
 		} catch ( JsonProcessingException e ) {
 			LOG.error( "Mapping input map", e );

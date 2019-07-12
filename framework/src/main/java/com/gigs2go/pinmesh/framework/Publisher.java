@@ -1,7 +1,7 @@
-package com.gigs2go.framework;
+package com.gigs2go.pinmesh.framework;
 
 public interface Publisher
 {
-	static final String ADMIN_TOPIC = "gigs2go/admin";
+	static final String ADMIN_TOPIC = "admin";
     PublishResult publish( Payload payload ) throws Exception;
 }
