@@ -17,7 +17,7 @@
 		<pi4j.version>1.2</pi4j.version>
 		<junit.version>5.4.2</junit.version>
 		<nanohttpd.version>2.3.1</nanohttpd.version>
-		<jackson.version>2.9.9</jackson.version>
+		<jackson.version>2.10.0.pr1</jackson.version>
 	</properties>
 
 	<modules>
